@@ -286,20 +286,17 @@ window.rejeitarComercial = async function(id){
 
 
 window.corrigirAdmin = async function(id){
-  const acao = val('acaoF_'+id);  // 'cadastrado' | 'reprovado_financeiro'
+  const acao = val('acaoF_'+id);
   const obs  = val('obsF_'+id);
-  if(!acao){ alert('Selecione a ação do financeiro.'); return; }
-  if(acao === 'reprovado_financeiro' ){
-    const j = await postJSON(API_UPD, { id,
-      status: 'Analise_Financeiro', obs });
-  } else{
-    const j = await postJSON(API_UPD, { id, status: acao, obs });
+
+  if(!acao){ alert('Selecione a acao do financeiro.'); return; }
+  if(acao === 'Reprovado_Financeiro' && !obs){
+    alert('Motivo e obrigatorio para reprovar.');
+    return;
   }
 
-  location.reload();
-  //const j = await postJSON(API_UPD, { id, status: acao, obs });
-  
- // if(!j.ok){ alert(j.msg || 'Falha ao salvar'); return; }
+  const j = await postJSON(API_UPD, { id, status: acao, obs });
+  if(!j.ok){ alert(j.msg || 'Falha ao salvar'); return; }
   location.reload();
 };
 

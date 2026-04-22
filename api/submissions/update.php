@@ -202,6 +202,9 @@ if ($status !== null) {
     }
     // pode enviar status 'cadastrado' sem obs
   }
+  if ($role === 'admin' && $status === 'Reprovado_Financeiro' && $obs === '') {
+    http_response_code(422); echo json_encode(['ok'=>false,'msg'=>'Informe o motivo da reprovacao financeira']); $pdo->rollBack(); exit;
+  }
   if ($status === 'Rejeitado_Comercial' && $obs === '') {
     http_response_code(422); echo json_encode(['ok'=>false,'msg'=>'Informe o motivo da rejeicao comercial']); $pdo->rollBack(); exit;
   }
@@ -260,7 +263,7 @@ if ($role === 'financeiro' && $status === 'Cadastrado')           $acao = 'finan
 if ($role === 'admin') {
   if ($status === 'Analise_Financeiro')   $acao = 'comercial_aprovou';
   if ($status === 'Rejeitado_Comercial')  $acao = 'comercial_rejeitou';
-  if ($status === 'Analise_Comercial')             $acao = 'financeiro_reprovou';
+  if ($status === 'Reprovado_Financeiro') $acao = 'financeiro_reprovou';
   if ($status === 'Cadastrado')           $acao = 'financeiro_cadastrou';
 }
 
