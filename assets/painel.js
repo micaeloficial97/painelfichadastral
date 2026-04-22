@@ -266,6 +266,24 @@ window.aprovarComercial = async function(id, ck){
   location.reload();
 };
 
+window.rejeitarComercial = async function(id){
+  const obs = val('obsC_'+id);
+
+  if(!obs){
+    alert('Informe o motivo da rejeicao comercial.');
+    return;
+  }
+
+  const j = await postJSON(API_UPD, {
+    id,
+    status: 'Rejeitado_Comercial',
+    obs
+  });
+
+  if(!j.ok){ alert(j.msg || 'Falha ao rejeitar no comercial'); return; }
+  location.reload();
+};
+
 
 window.corrigirAdmin = async function(id){
   const acao = val('acaoF_'+id);  // 'cadastrado' | 'reprovado_financeiro'
@@ -359,6 +377,7 @@ function fmtDateTime(s){
 function acaoBadge(acao){
   const map = {
     comercial_aprovou:   ['Aprovado (Comercial)','green'],
+    comercial_rejeitou:  ['Rejeitado (Comercial)','red'],
     financeiro_reprovou: ['Reprovado (Financeiro)','red'],
     financeiro_cadastrou:['Cadastrado (Financeiro)','gray']
   };

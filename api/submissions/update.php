@@ -156,7 +156,10 @@ if ($status !== null) {
   
   if ($role === 'comercial') {
     // pode aprovar se o status atual for Analise_Comercial OU Reprovado_Financeiro
-    $allowed = ($status === 'Analise_Financeiro' && in_array($old, ['Analise_Comercial','Reprovado_Financeiro'], true));
+    $allowed = (
+      in_array($status, ['Analise_Financeiro','Rejeitado_Comercial'], true)
+      && in_array($old, ['Analise_Comercial','Reprovado_Financeiro'], true)
+    );
     if (!$allowed) {
       http_response_code(409);
       echo json_encode(['ok'=>false,'msg'=>'Comercial só pode aprovar cadastros Analise_Comercials ou reprovados pelo Financeiro.']);
@@ -180,12 +183,15 @@ if ($status !== null) {
   // Regras por papel
   $cadFlag = 0; // default para `financeiro_cadastrado`, evita NULL
   if ($role === 'comercial') {
-    if ($status !== null && $status !== 'Analise_Financeiro') {
+    if ($status !== null && !in_array($status, ['Analise_Financeiro','Rejeitado_Comercial'], true)) {
       http_response_code(403); echo json_encode(['ok'=>false,'msg'=>'Ação não permitida ao Comercial']); $pdo->rollBack(); exit;
     }
     if ($status === 'Analise_Financeiro') {
       if ($consultor===''){ http_response_code(422); echo json_encode(['ok'=>false,'msg'=>'Selecione o consultor']); $pdo->rollBack(); exit; }
       if ($cond===''){ http_response_code(422); echo json_encode(['ok'=>false,'msg'=>'Selecione a condição de vendas']); $pdo->rollBack(); exit; }
+    }
+    if ($status === 'Rejeitado_Comercial' && $obs === '') {
+      http_response_code(422); echo json_encode(['ok'=>false,'msg'=>'Informe o motivo da rejeicao comercial']); $pdo->rollBack(); exit;
     }
     $cadFlag = 0;
   }
@@ -195,6 +201,9 @@ if ($status !== null) {
       http_response_code(422); echo json_encode(['ok'=>false,'msg'=>'Informe o motivo da reprovação']); $pdo->rollBack(); exit;
     }
     // pode enviar status 'cadastrado' sem obs
+  }
+  if ($status === 'Rejeitado_Comercial' && $obs === '') {
+    http_response_code(422); echo json_encode(['ok'=>false,'msg'=>'Informe o motivo da rejeicao comercial']); $pdo->rollBack(); exit;
   }
   if ($role === 'admin' && $status === 'Cadastrado') { 
     $old = 'Cadastrado';
@@ -209,7 +218,7 @@ if ($status !== null) {
 
   // valida status se veio
   if ($status !== null) {
-    $valid = ['Analise_Comercial','Analise_Financeiro','Reprovado_Financeiro','Cadastrado'];
+    $valid = ['Analise_Comercial','Analise_Financeiro','Reprovado_Financeiro','Rejeitado_Comercial','Cadastrado'];
     if (!in_array($status, $valid, true)) {
       http_response_code(422); echo json_encode(['ok'=>false,'msg'=>'Status inválido']); $pdo->rollBack(); exit;
     }
@@ -245,10 +254,12 @@ $pdo->prepare($sql)->execute([
   // Histórico (só quando a ação exige)
  $acao = null;
 if ($role === 'comercial'  && $status === 'Analise_Financeiro')   $acao = 'comercial_aprovou';
+if ($role === 'comercial'  && $status === 'Rejeitado_Comercial')  $acao = 'comercial_rejeitou';
 if ($role === 'financeiro' && $status === 'Reprovado_Financeiro') $acao = 'financeiro_reprovou';
 if ($role === 'financeiro' && $status === 'Cadastrado')           $acao = 'financeiro_cadastrou';
 if ($role === 'admin') {
   if ($status === 'Analise_Financeiro')   $acao = 'comercial_aprovou';
+  if ($status === 'Rejeitado_Comercial')  $acao = 'comercial_rejeitou';
   if ($status === 'Analise_Comercial')             $acao = 'financeiro_reprovou';
   if ($status === 'Cadastrado')           $acao = 'financeiro_cadastrou';
 }

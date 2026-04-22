@@ -6,7 +6,7 @@ require_login();
 $id = (int)($_POST['id'] ?? 0);
 $status = $_POST['status'] ?? '';
 $notes = trim($_POST['notes'] ?? '');
-$valid = ['Analise_Comercial','Analise_Financeiro','Reprovado_Financeiro', 'Cadastrado'];
+$valid = ['Analise_Comercial','Analise_Financeiro','Reprovado_Financeiro','Rejeitado_Comercial', 'Cadastrado'];
 if (!$id || !in_array($status,$valid,true)) { http_response_code(400); exit('Requisição inválida'); }
 
 $me = current_user();

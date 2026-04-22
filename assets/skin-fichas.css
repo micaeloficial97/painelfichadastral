@@ -30,7 +30,7 @@
 .page-fichas .badge{padding:6px 10px;border-radius:999px;font-size:12px;font-weight:600;display:inline-flex;align-items:center;gap:6px;box-shadow:inset 0 0 0 1px rgba(0,0,0,.04)}
 .page-fichas .badge.Analise_Comercial{background:var(--warn-bg);color:var(--warn-fg)}
 .page-fichas .badge.Analise_Financeiro,.page-fichas .badge.aprovado_financeiro{background:var(--ok-bg);color:var(--ok-fg)}
-.page-fichas .badge.Reprovado_Financeiro,.page-fichas .badge.reprovado_comercial{background:var(--error-bg);color:var(--error-fg)}
+.page-fichas .badge.Reprovado_Financeiro,.page-fichas .badge.Rejeitado_Comercial,.page-fichas .badge.reprovado_comercial{background:var(--error-bg);color:var(--error-fg)}
 .page-fichas .badge.Cadastrado{background:var(--info-bg);color:var(--info-fg)}
 
 /* Pílulas do histórico (mantém .pill.*) */
@@ -54,6 +54,7 @@
 }
 .page-fichas .actions button:hover{box-shadow:0 1px 0 rgba(0,0,0,.04),0 0 0 3px rgba(59,130,246,.08)}
 .page-fichas .actions .btn.approve,.page-fichas .actions .btn.success,.page-fichas .actions button.approve{background:#10b981;color:#fff;border-color:transparent}
+.page-fichas .actions .btn.reject,.page-fichas .actions button.reject{background:#dc2626;color:#fff;border-color:transparent}
 .page-fichas .actions .btn.slv {   background: #2563eb;
     color: #fff;
     border-color: transparent;

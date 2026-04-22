@@ -7,6 +7,7 @@ Badges de status
 .badge.pendente { background: #4b3b00; color: #ffd86b; }
 .badge.aprovado_comercial { background: #0b3c1c; color: #7dffa6; }
 .badge.reprovado_financeiro { background: #421515; color: #ff9a9a; }
+.badge.Rejeitado_Comercial { background: #421515; color: #ff9a9a; }
 
 .actions > .row-actions { margin-bottom: 6px; display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
 

@@ -105,6 +105,7 @@ $items = $st->fetchAll(PDO::FETCH_ASSOC);
         'Analise_Comercial',
         'Analise_Financeiro',
         'Reprovado_Financeiro',
+        'Rejeitado_Comercial',
         'Cadastrado'
       ];
 
@@ -122,7 +123,7 @@ $items = $st->fetchAll(PDO::FETCH_ASSOC);
       // Se nenhum status foi selecionado pelo usuario, aplica padrao por role
       if (empty($statusSelecionado)) {
         if ($role === 'comercial') {
-          $statusSelecionado = ['Analise_Comercial','Reprovado_Financeiro'];
+          $statusSelecionado = ['Analise_Comercial','Reprovado_Financeiro','Rejeitado_Comercial'];
         } elseif ($role === 'financeiro') {
           $statusSelecionado = ['Analise_Financeiro'];
         } elseif ($role === 'admin' || $role === 'dono') {
@@ -379,6 +380,9 @@ document.addEventListener('DOMContentLoaded', function () {
             <input id="obsC_<?= $r['id'] ?>" type="text" class="input-notes" placeholder="Observação (opcional)">
 <button  class="btn approve" type="button" onclick="showChk((ck) => aprovarComercial(<?= $r['id'] ?>, ck))">
   Aprovar
+</button>
+<button class="btn reject" type="button" onclick="rejeitarComercial(<?= $r['id'] ?>)">
+  Reijeita
 </button>
 
           
