@@ -1,0 +1,89 @@
+Badges de status
+.badge {
+  padding: 4px 8px;
+  border-radius: 999px;
+  font-size: 12px;
+}
+.badge.pendente { background: #4b3b00; color: #ffd86b; }
+.badge.aprovado_comercial { background: #0b3c1c; color: #7dffa6; }
+.badge.reprovado_financeiro { background: #421515; color: #ff9a9a; }
+
+.actions > .row-actions { margin-bottom: 6px; display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
+
+.input-notes { width: 220px; }
+.input-motivo { width: 260px; }
+
+.chk-inline { display: inline-flex; align-items: center; gap: 4px; }
+
+Overlay do checklist
+.overlay {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,.45);
+  display: none; align-items: center; justify-content: center;
+   z-index: 9999;
+}
+.overlay-card {
+  background: #fff; padding: 16px 18px; border-radius: 10px;
+  max-width: 560px; width: 92%;
+}
+.overlay-actions { display: flex; gap: 8px; justify-content: flex-end; margin-top: 12px; }
+
+Modal histórico – visual extra */
+#history-table-wrap .table tbody tr:nth-child(odd){ background: rgba(0,0,0,.03); }
+.pill{display:inline-block;padding:.15rem .5rem;border-radius:999px;font-size:12px}
+.pill.green{background:#0b3c1c;color:#7dffa6}
+.pill.red{background:#421515;color:#ff9a9a}
+.pill.gray{background:#333;color:#ddd}
+.badge.cadastrado { background: #0b2e3c; color: #9fd9ff; } 
+
+.details-row .card{ margin: 8px 0; }
+.det-grid{
+  display:grid;
+  grid-template-columns: repeat(2,minmax(240px,1fr));
+  gap:8px 16px;
+}
+.det-grid .full{ grid-column: 1 / -1; }
+.files li{ display:flex; gap:8px; align-items:center; margin:4px 0; }
+
+.det-grid{
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px 24px;
+}
+.det-grid .full{ grid-column: 1 / -1; } */
+.det-grid .col2{ grid-column: 2; }         /* força ir para a coluna da direita */
+
+/* responsivo: em telas estreitas, tudo vira uma coluna */
+@media (max-width: 900px){
+  .det-grid{ grid-template-columns: 1fr; }
+  .det-grid .col2{ grid-column: 1; }
+}
+
+.ck-block{ margin:10px 0; padding:10px; border:1px solid #eee; border-radius:8px; }
+.ck-block h4{ margin:0 0 8px; }
+.ck-block label{ display:block; margin:4px 0; }
+.ck-obs{ width:100%; margin-top:6px; }
+.ck-actions{ display:flex; gap:8px; justify-content:flex-end; margin-top:12px; }
+
+/* Lista de anexos */
+ul.files {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+ul.files li {
+  display: grid;
+  grid-template-columns: 1fr auto auto auto; /* meta | Visualizar | Baixar | Substituir */
+  align-items: center;
+  gap: 16px;
+  padding: 10px 12px;
+  border-top: 1px solid #eee;
+}
+ul.files li:first-child { border-top: 0; }
+
+/* célula vazia para manter alinhamento quando botão não existe */
+.files .cell--empty {
+  width: 72px;            /* ajusta conforme largura do seu .btn */
+  height: 28px;           /* mesma altura do botão */
+  display: inline-block;
+}

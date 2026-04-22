@@ -1,0 +1,34 @@
+# Força HTTPS
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteBase /painel/
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^ index.php [L]
+</IfModule>
+
+# Bloqueia listagem de diretório
+Options -Indexes
+
+# Cache básico para CSS
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType text/css "access plus 7 days"
+</IfModule>
+# Bloquear .env e similares
+<FilesMatch "^\.env(\..*)?$">
+  Require all denied
+</FilesMatch>
+
+# Bloquear arquivos de config por padrão de nome
+<FilesMatch "^(config|secrets|db|env)\.(php|inc|ini|json|yml)$">
+  Require all denied
+</FilesMatch>
+
+# Evitar download de .php salvo como .txt/.bak/etc
+<FilesMatch "\.(bak|old|orig|save|swp|swo|tmp)$">
+  Require all denied
+</FilesMatch>
+
+# Desativar listagem de diretórios
+Options -Indexes
